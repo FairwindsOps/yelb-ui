@@ -32,7 +32,7 @@ jobs:
       - run:
           name: docker login
           command: |
-            echo "$FAIRWINDS_QUAY_PASSWORD" |  docker login -u "$FAIRWINDS_QUAY_USER" --password-stdin quay.io
+            echo "$FAIRWINDS_QUAY_TOKEN" |  docker login -u "$FAIRWINDS_QUAY_USER" --password-stdin quay.io
       - docker/build:
           image: quay.io/fairwinds/yelb-ui
 
