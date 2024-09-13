@@ -2,7 +2,8 @@ version: 2.1
 
 orbs:
   rok8s: fairwinds/rok8s-scripts@14
-  docker: circleci/docker@2.7.0
+  docker: circleci/docker@2
+  gh: circleci/github-cli@2
 
 references:
   install_vault: &install_vault
@@ -12,6 +13,16 @@ references:
         wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
         echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
         sudo apt update && sudo apt install vault
+
+
+jobs:
+  deploy-staging:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - gh/install
+      - gh/clone:
+          repo: https://github.com/fairwindsops/yelb-deploy
 
 workflows:
   version: 2
@@ -33,4 +44,9 @@ workflows:
               only: /.*/
             tags:
               ignore: /v.*/
-
+      - deploy-staging:
+          filters:
+            branches:
+              only: /main/
+            tags:
+              ignore: /v.*/
