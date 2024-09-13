@@ -27,6 +27,7 @@ workflows:
           cache_from: quay.io/fairwinds/yelb-ui:v0.1.0
           docker-password: FAIRWINDS_QUAY_TOKEN
           docker-username: FAIRWINDS_QUAY_USER
+          registry: quay.io
           filters:
             branches:
               only: /.*/
