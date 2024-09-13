@@ -33,8 +33,7 @@ jobs:
           name: docker login
           command: |
             docker login -u "$FAIRWINDS_QUAY_USER" -p "$FAIRWINDS_QUAY_PASSWORD" quay.io
-      - circleci/build:
-          name: docker build
+      - docker/build:
           image: quay.io/fairwinds/yelb-ui
 
 
