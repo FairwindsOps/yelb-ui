@@ -29,10 +29,10 @@ jobs:
       - *install_vault
       - rok8s/get_vault_env:
           vault_path: repo/global/env
-      - run:
-          name: docker login
-          command: |
-            echo "$FAIRWINDS_QUAY_TOKEN" |  docker login -u "$FAIRWINDS_QUAY_USER" --password-stdin quay.io
+      - docker/check:
+          docker-username: "$FAIRWINDS_QUAY_USER"
+          docker-password: "$FAIRWINDS_QUAY_TOKEN"
+          registry: quay.io
       - docker/build:
           image: quay.io/fairwinds/yelb-ui
           cache_from: quay.io/fairwinds/yelb-ui:v0.1.0
