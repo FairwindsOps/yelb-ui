@@ -21,6 +21,7 @@ workflows:
   build:
     jobs:
       - docker/publish:
+          executor: docker/machine
           after_checkout:
             - *install_vault
             - rok8s/get_vault_env:
