@@ -1,5 +1,4 @@
 FROM node:12
-MAINTAINER massimo@it20.info
 
 WORKDIR /
 
@@ -33,8 +32,7 @@ RUN ng build --environment=test --output-path=./test/dist/
 RUN ng build --environment=dev --output-path=./dev/dist/
 
 
-FROM nginx:1.17.10
-MAINTAINER massimo@it20.info
+FROM nginx:1.27
 
 WORKDIR /
 ADD startup.sh startup.sh
