@@ -29,11 +29,6 @@ jobs:
       - *install_vault
       - rok8s/get_vault_env:
           vault_path: repo/global/env
-      - rok8s/docker_login:
-          password-variable: FAIRWINDS_QUAY_PASSWORD
-          registry: quay.io
-          username: fairwinds+circleci
-
       - run:
           name: docker login
           command: |
