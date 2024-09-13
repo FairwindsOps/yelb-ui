@@ -1,4 +1,4 @@
-FROM node:12.22
+FROM node:12
 MAINTAINER massimo@it20.info
 
 WORKDIR /
