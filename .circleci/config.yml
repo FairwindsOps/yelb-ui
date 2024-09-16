@@ -37,14 +37,14 @@ jobs:
             ls -al
             git status
             yq --version
+            git config --global user.email "circleci@fairwinds.com"
+            git config --global user.name "circleci"
+            git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-ui.git
             git pull --rebase
             yq -i '(.spec.source.helm.parameters[] | select(.name == "ui.image.tag") | .value) = strenv(CIRCLE_SHA1)' stable/application-yelb-staging.yaml
             git diff
             git add stable/application-yelb-staging.yaml
-            git config --global user.email "circleci@fairwinds.com"
-            git config --global user.name "circleci"
             git commit -m "build: staging ui to ${CIRCLE_SHA1}"
-            git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-ui.git
             git push
 
 workflows:
