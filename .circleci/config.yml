@@ -20,8 +20,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - *install_vault
+      - run: sudo apt-get install --reinstall -y vault
       - run: vault --version
-      - run: sudo vault --version
       - rok8s/get_vault_env:
           vault_path: repo/global/env
       - gh/install
