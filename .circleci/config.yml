@@ -37,7 +37,7 @@ jobs:
             ls -al
             git status
             yq --version
-            git pull
+            git pull --rebase
             yq -i '(.spec.source.helm.parameters[] | select(.name == "ui.image.tag") | .value) = strenv(CIRCLE_SHA1)' stable/application-yelb-staging.yaml
             git diff
             git add stable/application-yelb-staging.yaml
