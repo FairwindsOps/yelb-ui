@@ -37,6 +37,7 @@ jobs:
             ls -al
             git status
             cat stable/application-yelb-staging.yaml
+            yq --version
 
 
 workflows:
