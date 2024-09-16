@@ -107,3 +107,11 @@ workflows:
               only: /main/
             tags:
               ignore: /v.*/
+      - deploy-feature:
+          requires:
+            - docker/publish
+          filters:
+            branches:
+              ignore: /main/
+            tags:
+              ignore: /v.*/
