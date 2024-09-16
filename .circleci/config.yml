@@ -41,6 +41,9 @@ jobs:
             git config --global user.name "circleci"
             git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-ui.git
             git pull --rebase
+            git status
+            git rev-parse HEAD
+            ls -al
             yq -i '(.spec.source.helm.parameters[] | select(.name == "ui.image.tag") | .value) = strenv(CIRCLE_SHA1)' stable/application-yelb-staging.yaml
             git diff
             git add stable/application-yelb-staging.yaml
