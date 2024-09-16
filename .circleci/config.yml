@@ -29,7 +29,7 @@ jobs:
       - gh/clone:
           repo: https://github.com/fairwindsops/yelb-deploy
       - run:
-          name: deploy staging
+          name: Deploy Feature
           command: |
             #! /bin/bash
 
@@ -43,6 +43,41 @@ jobs:
             git add stable/application-yelb-staging.yaml
             git commit -m "build: staging ui to ${CIRCLE_SHA1}"
             git push
+
+  deploy-feature:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - *install_vault
+      - run:
+          name: Reinstall Vault (workaround)
+          command: sudo apt-get install --reinstall -y vault
+      - rok8s/get_vault_env:
+          vault_path: repo/global/env
+      - gh/install
+      - gh/clone:
+          repo: https://github.com/fairwindsops/yelb-deploy
+      - run:
+          name: Depoy Feature
+          command: |
+            #! /bin/bash
+
+            set -e
+
+            git config --global user.email "circleci@fairwinds.com"
+            git config --global user.name "circleci"
+            git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-deploy.git
+            SANITIZED_BRANCH=$(echo "${CI_BRANCH}" | sed 's/[^a-zA-Z0-9]/-/g' | tr '[:upper:]' '[:lower:]')
+            OUTPUT_FILE="feature/$SANITIZED_BRANCH.json"
+            echo "Deploying branch with identifier: $SANITIZED_BRANCH"
+            cp feature-template.json "$OUTPUT_FILE"
+            tmp=$(mktemp) jq '.identifier = "$SANITIZED_BRANCH"' "$OUTPUT_FILE" > "$tmp" && mv "$tmp" "$OUTPUT_FILE"
+            tmp=$(mktemp) jq '.uiImageTag = "$CIRCLE_SHA1"' "$OUTPUT_FILE" > "$tmp" && mv "$tmp" "$OUTPUT_FILE"
+
+            git diff
+            git add feature/$SANITIZED_BRANCH.json
+            git commit -m "build: deploying feature $SANITIZED_BRANCH"
+            # git push
 
 workflows:
   version: 2
