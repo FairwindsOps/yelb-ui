@@ -20,6 +20,9 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - *install_vault
+      - rok8s/get_vault_env:
+          vault_path: repo/global/env
       - gh/install
       - gh/clone:
           repo: https://github.com/fairwindsops/yelb-deploy
