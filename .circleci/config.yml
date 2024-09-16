@@ -39,7 +39,7 @@ jobs:
             yq --version
             git config --global user.email "circleci@fairwinds.com"
             git config --global user.name "circleci"
-            git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-ui.git
+            git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-deploy.git
             git pull --rebase
             git status
             git rev-parse HEAD
