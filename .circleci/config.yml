@@ -40,10 +40,6 @@ jobs:
             git config --global user.email "circleci@fairwinds.com"
             git config --global user.name "circleci"
             git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/fairwindsops/yelb-deploy.git
-            git pull --rebase
-            git status
-            git rev-parse HEAD
-            ls -al
             yq -i '(.spec.source.helm.parameters[] | select(.name == "ui.image.tag") | .value) = strenv(CIRCLE_SHA1)' stable/application-yelb-staging.yaml
             git diff
             git add stable/application-yelb-staging.yaml
@@ -71,6 +67,8 @@ workflows:
             tags:
               ignore: /v.*/
       - deploy-staging:
+          requires:
+            - docker/publish
           filters:
             branches:
               only: /main/
