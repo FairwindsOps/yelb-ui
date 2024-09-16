@@ -27,6 +27,17 @@ jobs:
       - gh/install
       - gh/clone:
           repo: https://github.com/fairwindsops/yelb-deploy
+      - run:
+          name: deploy staging
+          command: |
+            #! /bin/bash
+
+            set -e
+
+            ls -al
+            git status
+            cat stable/application-yelb-staging.yaml
+
 
 workflows:
   version: 2
