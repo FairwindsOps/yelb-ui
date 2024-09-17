@@ -71,8 +71,7 @@ jobs:
             OUTPUT_FILE="feature/$SANITIZED_BRANCH.json"
             echo "Deploying branch with identifier: $SANITIZED_BRANCH"
             cp feature-template.json "$OUTPUT_FILE"
-            tmp=$(mktemp)
-            jq '.identifier = env.SANITIZED_BRANCH, .uiImageTag = env.CIRCLE_SHA1, .lastDeployed = env.TIMESTAMP' "${OUTPUT_FILE}" > "$tmp" && mv "$tmp" "$OUTPUT_FILE"
+            jq '.identifier = env.SANITIZED_BRANCH | .uiImageTag = env.CIRCLE_SHA1 | .lastDeployed = env.TIMESTAMP' feature-template.json > "$OUTPUT_FILE"
             ls -al feature
             cat "$OUTPUT_FILE"
             git diff
