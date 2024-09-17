@@ -95,6 +95,7 @@ workflows:
           docker-password: FAIRWINDS_QUAY_TOKEN
           docker-username: FAIRWINDS_QUAY_USER
           registry: quay.io
+          tag: '$CIRCLE_SHA1,$CIRCLE_BRANCH'
           filters:
             branches:
               only: /.*/
