@@ -87,6 +87,7 @@ workflows:
   build:
     jobs:
       - docker/publish:
+          name: Publish Main
           executor: docker/machine
           after_checkout:
             - *install_vault
@@ -99,12 +100,28 @@ workflows:
           tag: '$CIRCLE_SHA1,${CIRCLE_BRANCH/\/-}'
           filters:
             branches:
-              only: /.*/
+              only: /main/
             tags:
-              ignore: /v.*/
+              ignore: /.*/
+      - docker/publish:
+          name: Publish Non-Main
+          executor: docker/machine
+          after_checkout:
+            - *install_vault
+            - rok8s/get_vault_env:
+                vault_path: repo/global/env
+          image: fairwinds/yelb-ui
+          docker-password: FAIRWINDS_QUAY_TOKEN
+          docker-username: FAIRWINDS_QUAY_USER
+          registry: quay.io
+          filters:
+            branches:
+              ignore: /main/
+            tags:
+              ignore: /.*/
       - deploy-staging:
           requires:
-            - docker/publish
+            - 'Publish Main'
           filters:
             branches:
               only: /main/
@@ -112,7 +129,7 @@ workflows:
               ignore: /v.*/
       - deploy-feature:
           requires:
-            - docker/publish
+            - 'Publish Non-Main'
           filters:
             branches:
               ignore: /main/
