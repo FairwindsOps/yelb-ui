@@ -20,14 +20,14 @@ export class AppComponent implements OnInit {
                 private env: EnvService
                ) {}
 
-/** Here we set the appserver endpoint. 
+/** Here we set the appserver endpoint.
 If you are using the nginx redirect method (used in the bare metal, EC2 and containers deployment) leave it as is:
 >> public appserver    =    environment.appserver_env;
 If you want to take advantage of the env.js file (used in the serverless S3 static web hosting use case) then change it to:
 >> public appserver    =    this.env.apiUrl;
 This will set the endpoint to the value found in env.js (right now this change needs to be done at build time e.g. via sed)
-For reference: support for reading the env.js file has been introduced following these steps: 
-https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/ 
+For reference: support for reading the env.js file has been introduced following these steps:
+https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/
 */
 
 public appserver = environment.appserver_env;
@@ -49,7 +49,7 @@ getvotes(): void {
     console.log("connecting to app server " + url);
     this.http.get(url)
                 .map((res: Response) => res.json())
-                .subscribe(res => {console.log(res); this.votes = res})                
+                .subscribe(res => {console.log(res); this.votes = res})
     }
 
 getstats(): void {
@@ -57,7 +57,7 @@ getstats(): void {
     console.log("connecting to app server " + url);
     this.http.get(url)
                 .map((res: Response) => res.json())
-                .subscribe(res => {console.log(res, res.hostname, res.pageviews); this.stats = res})                
+                .subscribe(res => {console.log(res, res.hostname, res.pageviews); this.stats = res})
     }
 
 vote(restaurant: string): void {
@@ -65,7 +65,7 @@ vote(restaurant: string): void {
     console.log("connecting to app server " + url);
     this.http.get(url)
                 .map((res: Response) => res.json())
-                .subscribe(res => {console.log(res)});    
+                .subscribe(res => {console.log(res)});
     this.getvotes()
     }
 }
