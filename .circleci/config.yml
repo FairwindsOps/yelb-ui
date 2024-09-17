@@ -74,10 +74,11 @@ jobs:
             jq '.identifier = env.SANITIZED_BRANCH | .uiImageTag = env.CIRCLE_SHA1 | .lastDeployed = env.TIMESTAMP' feature-template.json > "$OUTPUT_FILE"
             ls -al feature
             cat "$OUTPUT_FILE"
+
             git diff
             git add feature/$SANITIZED_BRANCH.json
             git commit -m "build: deploying feature $SANITIZED_BRANCH"
-            # git push
+            git push
 
 workflows:
   version: 2
