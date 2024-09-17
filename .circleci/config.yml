@@ -76,7 +76,7 @@ jobs:
             ls -al feature
             cat "$OUTPUT_FILE"
 
-            go run scripts/prune.go
+            go run feature-management/main.go prune
             git diff
             git add feature/
             git commit -m "build: deploying feature $SANITIZED_BRANCH"
