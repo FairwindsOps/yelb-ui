@@ -27,7 +27,7 @@ jobs:
           vault_path: repo/global/env
       - gh/install
       - gh/clone:
-          repo: https://github.com/fairwindsops/yelb-deploy
+          repo: https://github.com/fairwindsops/yelb-deploy.git
       - run:
           name: Deploy Feature
           command: |
@@ -56,7 +56,7 @@ jobs:
           vault_path: repo/global/env
       - gh/install
       - gh/clone:
-          repo: https://github.com/fairwindsops/yelb-deploy
+          repo: https://github.com/fairwindsops/yelb-deploy.git
       - run:
           name: Deploy Feature
           command: |
