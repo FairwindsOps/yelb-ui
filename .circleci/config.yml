@@ -91,7 +91,6 @@ workflows:
             - rok8s/get_vault_env:
                 vault_path: repo/global/env
           image: fairwinds/yelb-ui
-          #cache_from: quay.io/fairwinds/yelb-ui:8a4935f353feeebee3587bc89340dc3b4d678523
           docker-password: FAIRWINDS_QUAY_TOKEN
           docker-username: FAIRWINDS_QUAY_USER
           registry: quay.io
