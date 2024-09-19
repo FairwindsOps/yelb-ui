@@ -29,7 +29,7 @@ jobs:
       - gh/clone:
           repo: https://github.com/FairwindsOps/yelb-deploy.git
       - run:
-          name: Deploy Feature
+          name: Deploy Staging
           command: |
             #! /bin/bash
 
@@ -68,12 +68,12 @@ jobs:
             git config --global user.name "circleci"
             git remote set-url origin https://circleci:${GITHUB_TOKEN}@github.com/FairwindsOps/yelb-deploy.git
 
-            go run feature-management/main.go generate --ui-tag="$CIRCLE_SHA1"
+            go run feature-management/main.go generate --ui-tag="$CIRCLE_SHA1" --component ui
             go run feature-management/main.go prune
 
             git diff
             git add feature/
-            git commit -m "build: deploying feature $SANITIZED_BRANCH"
+            git commit -m "build: deploying ui feature $CIRCLE_BRANCH"
             git push
 
 workflows:
